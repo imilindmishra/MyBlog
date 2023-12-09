@@ -7,11 +7,13 @@ import Login from "./components/account/Login";
 import DataProvider from "./context/DataProvider";
 import Home from "./components/home/home";
 import Header from "./components/header/header";
+import CreatePost from "./components/create/CreatePost";
 
 const PrivateRoute = ({ isAuthenticated, ...props}) => {
 
   return isAuthenticated ? 
     <>
+      <Header />
       <Outlet />
     </>
   : <Navigate replace to='/login' />
@@ -26,7 +28,7 @@ function App() {
   return (
     <DataProvider>
       <BrowserRouter>
-        <Header />
+        
         <div style={{marginTop : 64}}>
           <Routes>
             <Route path='/login' element={<Login isUserAuthenticated={isUserAuthenticated} />} />
@@ -34,6 +36,11 @@ function App() {
             <Route path='/' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
               <Route path='/' element={<Home />} />
             </Route>
+
+            <Route path='/create' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
+              <Route path='/create' element={<CreatePost/>} />
+            </Route>
+
           </Routes>
         </div>
       </BrowserRouter>
